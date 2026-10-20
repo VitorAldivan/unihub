@@ -1,0 +1,63 @@
+# Ambientes e Variáveis Secretas (CRÍTICO DE SEGURANÇA)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+env/
+
+# Node & Next.js
+node_modules/
+.next/
+out/
+.npm
+.yarn/
+*.tsbuildinfo
+next-env.d.ts
+
+# Testes e Cobertura
+.coverage
+htmlcov/
+.pytest_cache/
+coverage/
+
+# IDEs e Editores
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Banco de dados e uploads locais
+data/
+uploads/
