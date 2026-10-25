@@ -1,7 +1,7 @@
 # Progresso do UniHub
 
 - **Fase atual:** 0 — Fundação
-- **Última sessão:** 2026-10-19
+- **Última sessão:** 2026-10-25
 - **Mentor:** Antigravity (IA)
 - **Desenvolvedor:** Vitor Aldivan
 
@@ -17,15 +17,16 @@
 - [x] Criação do `README.md` inicial do projeto.
 - [x] Criação do primeiro registro de decisão arquitetural: `docs/adr/0001-monolito-modular.md`.
 - [x] Conexão do repositório local ao GitHub remoto e primeiro push concluído com sucesso ([github.com/VitorAldivan/unihub](https://github.com/VitorAldivan/unihub)).
+- [x] Governança de código: `.editorconfig`, `.env.example`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `.github/PULL_REQUEST_TEMPLATE.md`.
+- [x] Estrutura do Monólito Modular: `apps/api` (FastAPI + testes de saúde), `apps/web` (Next.js), `infra/docker/api.Dockerfile`, `docker-compose.yml` e `Makefile`.
 
 ## 🔄 Em andamento
-- [ ] Preparação do ambiente de containers (WSL2 e Docker Desktop).
-- [ ] Estruturação de pastas do projeto monólito (`apps/web`, `apps/api`, `infra/`).
+- [ ] Preparação do ambiente de containers (WSL2 e Docker Desktop no Windows).
 
 ## 🎯 Próximos passos
-- [ ] Criar o repositório remoto no GitHub do usuário e fazer o primeiro push.
-- [ ] Estruturar as pastas das aplicações (`apps/web`, `apps/api`).
-- [ ] Instalar WSL2 e Docker Desktop para rodar PostgreSQL e Redis.
+- [ ] Instalar WSL2 e Docker Desktop.
+- [ ] Subir os primeiros containers com `docker compose up -d` (PostgreSQL com pgvector, Redis e API).
+- [ ] Validar endpoints de saúde (`/health/live`, `/health/ready`) e documentação Swagger (`/docs`).
 
 ## 🚧 Bloqueios / dúvidas
 - Nenhum bloqueio no momento.

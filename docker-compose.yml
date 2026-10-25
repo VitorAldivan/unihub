@@ -1,0 +1,69 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: unihub_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-unihub_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-unihub_password}
+      POSTGRES_DB: ${POSTGRES_DB:-unihub_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-unihub_app} -d ${POSTGRES_DB:-unihub_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - unihub_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: unihub_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - unihub_network
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    container_name: unihub_api
+    restart: unless-stopped
+    environment:
+      - APP_ENV=local
+      - DEBUG=True
+      - DATABASE_URL=postgresql+psycopg://${POSTGRES_USER:-unihub_app}:${POSTGRES_PASSWORD:-unihub_password}@postgres:5432/${POSTGRES_DB:-unihub_db}
+      - REDIS_URL=redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - unihub_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  unihub_network:
+    driver: bridge
