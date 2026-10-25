@@ -16,10 +16,11 @@
 - [x] Criação da blindagem do `.gitignore`.
 - [x] Criação do `README.md` inicial do projeto.
 - [x] Criação do primeiro registro de decisão arquitetural: `docs/adr/0001-monolito-modular.md`.
+- [x] Conexão do repositório local ao GitHub remoto e primeiro push concluído com sucesso ([github.com/VitorAldivan/unihub](https://github.com/VitorAldivan/unihub)).
 
 ## 🔄 Em andamento
-- [ ] Conexão do repositório local ao GitHub remoto e primeiro push.
-- [ ] Preparação para instalação do WSL2 e Docker Desktop.
+- [ ] Preparação do ambiente de containers (WSL2 e Docker Desktop).
+- [ ] Estruturação de pastas do projeto monólito (`apps/web`, `apps/api`, `infra/`).
 
 ## 🎯 Próximos passos
 - [ ] Criar o repositório remoto no GitHub do usuário e fazer o primeiro push.
