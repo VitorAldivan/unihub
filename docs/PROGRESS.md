@@ -19,14 +19,17 @@
 - [x] Conexão do repositório local ao GitHub remoto e primeiro push concluído com sucesso ([github.com/VitorAldivan/unihub](https://github.com/VitorAldivan/unihub)).
 - [x] Governança de código: `.editorconfig`, `.env.example`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `.github/PULL_REQUEST_TEMPLATE.md`.
 - [x] Estrutura do Monólito Modular: `apps/api` (FastAPI + testes de saúde), `apps/web` (Next.js), `infra/docker/api.Dockerfile`, `docker-compose.yml` e `Makefile`.
+- [x] Arquitetura documentada: Diagramas C4 Nível 1 e 2 em `docs/architecture/c4-model.md`.
+- [x] Blindagem DevSecOps: Pipeline de segurança e linter com `.pre-commit-config.yaml` (Gitleaks + Ruff).
+- [x] Otimização e controle de hardware: Arquivo `.wslconfig` configurado com teto de 3 GB de RAM.
 
 ## 🔄 Em andamento
-- [ ] Preparação do ambiente de containers (WSL2 e Docker Desktop no Windows).
+- [ ] Teste de subida dos containers com Docker Compose e validação da API.
 
 ## 🎯 Próximos passos
-- [ ] Instalar WSL2 e Docker Desktop.
-- [ ] Subir os primeiros containers com `docker compose up -d` (PostgreSQL com pgvector, Redis e API).
-- [ ] Validar endpoints de saúde (`/health/live`, `/health/ready`) e documentação Swagger (`/docs`).
+- [ ] Iniciar o Docker Desktop (quando for codar) e rodar `docker compose up -d`.
+- [ ] Acessar os endpoints da API no navegador (`http://localhost:8000/docs`).
+- [ ] Mini-quiz de encerramento da Fase 0 (5 perguntas).
 
 ## 🚧 Bloqueios / dúvidas
 - Nenhum bloqueio no momento.
