@@ -1,6 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.core.database import Base, engine
+from app.modules.attendance.routers.attendance import router as attendance_router
+from app.modules.attendance.routers.courses import router as courses_router
+
+# Cria as tabelas no banco de dados automaticamente ao inicializar
+Base.metadata.create_all(bind=engine)
+
 app = FastAPI(
     title="UniHub API",
     description="API do UniHub — Plataforma acadêmica com controle inteligente de faltas e frequência",
@@ -8,7 +15,6 @@ app = FastAPI(
 )
 
 # Configuração de CORS (Cross-Origin Resource Sharing)
-# No ambiente local permitimos a aplicação web (Next.js) em localhost:3000
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -17,16 +23,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Registro dos módulos da aplicação
+app.include_router(attendance_router)
+app.include_router(courses_router)
+
 
 @app.get("/health/live", tags=["Health"])
 def liveness_check():
-    """Verifica se o processo da API está vivo e respondendo."""
     return {"status": "healthy", "service": "unihub-api"}
 
 
 @app.get("/health/ready", tags=["Health"])
 def readiness_check():
-    """Verifica se a API está pronta para receber tráfego."""
     return {"status": "ready", "service": "unihub-api"}
 
 

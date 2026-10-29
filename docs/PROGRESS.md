@@ -23,16 +23,23 @@
 - [x] Blindagem DevSecOps: Pipeline de segurança e linter com `.pre-commit-config.yaml` (Gitleaks + Ruff).
 - [x] Otimização e controle de hardware: Arquivo `.wslconfig` configurado com teto de 3 GB de RAM.
 - [x] **Domínio de Frequência (Fase 1):** Regras puras de cálculo de limite de faltas, semáforo de status (`SAFE`, `WARNING`, `RISK`, `FAILED`), resumo consolidado e simulador de faltas futuras implementados em `apps/api/app/modules/attendance/domain/calculator.py`.
-- [x] **Testes Automatizados:** 13 testes unitários com pytest passando em 0.08s cobrindo 100% dos cenários e casos de borda.
+- [x] **Camada de Banco de Dados (SQLAlchemy 2.0):** Conexão com banco (`app/core/database.py`), modelos relacionais (`Course`, `ClassSession`, `AttendanceRecord`) com integridade referencial e constraints de segurança.
+- [x] **Schemas e Validação (Pydantic v2):** Modelos de entrada/saída com validação estrita, tipos e documentação OpenAPI.
+- [x] **Endpoints HTTP da API (FastAPI):**
+  - `POST /api/v1/attendance/simulate`: Simulador de faltas futuras.
+  - `POST /api/v1/courses/`: Criação de disciplina e geração automática de sessões.
+  - `GET /api/v1/courses/`: Listagem de disciplinas com métricas consolidadas em tempo real.
+  - `POST /api/v1/courses/attendance`: Registro de presença/falta em 1 toque.
+- [x] **Testes Automatizados:** 21 testes (unitários + integração de API) passando com 100% de sucesso.
+- [x] **Documentação Interativa:** Swagger UI ativo e funcionando em `http://localhost:8000/docs`.
 
 ## 🔄 Em andamento
-- [ ] Criação dos Schemas de validação com Pydantic v2 e endpoints da API FastAPI para o cálculo e simulador.
+- [ ] Inicialização da aplicação Front-end Web em Next.js (TypeScript + Tailwind CSS + PWA).
 
 ## 🎯 Próximos passos
-- [ ] Implementar Schemas Pydantic (`AttendanceSummaryResponse`, `SimulateAbsenceRequest`, `SimulationResultResponse`).
-- [ ] Criar o router HTTP da API (`POST /api/v1/attendance/simulate`).
-- [ ] Testar a API via Swagger (`/docs`) e testes de integração com `TestClient`.
-- [ ] Modelagem de banco de dados e migrations com Alembic (Postgres).
+- [ ] Criar a base do app Next.js em `apps/web` (App Router, Tailwind CSS, TypeScript).
+- [ ] Configurar o PWA (manifest.json, ícones para iPhone/Safari).
+- [ ] Construir as telas baseadas no protótipo do Figma: Tela "Hoje" com botões de 1 toque e Tela "Disciplinas".
 
 ## 🚧 Bloqueios / dúvidas
 - Nenhum bloqueio no momento.
