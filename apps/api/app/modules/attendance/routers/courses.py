@@ -1,5 +1,6 @@
 import datetime
-from fastapi import APIRouter, Depends, HTTPException, status
+import json
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -18,46 +19,37 @@ from app.modules.attendance.schemas.course import (
 router = APIRouter(prefix="/api/v1/courses", tags=["Disciplinas"])
 
 
-@router.post(
-    "/",
-    response_model=CourseResponse,
-    status_code=status.HTTP_201_CREATED,
-    summary="Cadastrar nova disciplina",
-)
-def create_course(payload: CourseCreate, db: Session = Depends(get_db)):
-    course = Course(
-        name=payload.name,
-        teacher=payload.teacher,
-        workload_hours=payload.workload_hours,
-        min_attendance_pct=payload.min_attendance_pct,
-        color=payload.color,
+def _to_course_response(course: Course, db: Session) -> CourseResponse:
+    total_sessions = len(course.sessions) if course.sessions else course.workload_hours
+    held_sessions = sum(1 for s in course.sessions if s.attendance is not None)
+    absences = sum(
+        1 for s in course.sessions if s.attendance and s.attendance.status == "absent"
     )
-    db.add(course)
-    db.commit()
-    db.refresh(course)
-
-    # Gera as aulas previstas automaticamente com base na carga horária
-    for i in range(payload.workload_hours):
-        session = ClassSession(
-            course_id=course.id,
-            date=datetime.date.today() + datetime.timedelta(days=i * 2),
-            status="scheduled",
-        )
-        db.add(session)
-    db.commit()
 
     summary = calculate_attendance_summary(
-        total_sessions=payload.workload_hours,
-        held_sessions=0,
-        absences=0,
-        min_attendance_pct=payload.min_attendance_pct,
+        total_sessions=total_sessions,
+        held_sessions=held_sessions,
+        absences=absences,
+        min_attendance_pct=course.min_attendance_pct,
     )
+
+    try:
+        parsed_weekdays = json.loads(course.weekdays) if course.weekdays else []
+    except Exception:
+        parsed_weekdays = []
 
     return CourseResponse(
         id=course.id,
+        user_email=course.user_email,
         name=course.name,
         teacher=course.teacher,
+        room=course.room,
+        semester=course.semester,
+        weekdays=parsed_weekdays,
+        start_time=course.start_time,
+        end_time=course.end_time,
         workload_hours=course.workload_hours,
+        total_classes=course.total_classes,
         min_attendance_pct=course.min_attendance_pct,
         color=course.color,
         total_sessions=summary.total_sessions,
@@ -71,57 +63,68 @@ def create_course(payload: CourseCreate, db: Session = Depends(get_db)):
     )
 
 
+@router.post(
+    "/",
+    response_model=CourseResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Cadastrar nova disciplina",
+)
+def create_course(payload: CourseCreate, db: Session = Depends(get_db)):
+    course = Course(
+        user_email=payload.user_email,
+        name=payload.name,
+        teacher=payload.teacher,
+        room=payload.room,
+        semester=payload.semester,
+        weekdays=json.dumps(payload.weekdays),
+        start_time=payload.start_time,
+        end_time=payload.end_time,
+        workload_hours=payload.workload_hours,
+        total_classes=payload.total_classes,
+        min_attendance_pct=payload.min_attendance_pct,
+        color=payload.color,
+    )
+    db.add(course)
+    db.commit()
+    db.refresh(course)
+
+    # Gera as aulas previstas
+    planned_sessions = payload.total_classes or payload.workload_hours
+    for i in range(planned_sessions):
+        session = ClassSession(
+            course_id=course.id,
+            date=datetime.date.today() + datetime.timedelta(days=i * 2),
+            status="scheduled",
+        )
+        db.add(session)
+    db.commit()
+    db.refresh(course)
+
+    return _to_course_response(course, db)
+
+
 @router.get(
     "/",
     response_model=list[CourseResponse],
-    summary="Listar disciplinas com métricas calculadas",
+    summary="Listar disciplinas",
 )
-def list_courses(db: Session = Depends(get_db)):
-    courses = db.query(Course).all()
-    results = []
-
-    for course in courses:
-        total = len(course.sessions)
-        held_sessions = [s for s in course.sessions if s.status == "held"]
-        absences = sum(
-            1
-            for s in held_sessions
-            if s.attendance and s.attendance.status == "absent"
-        )
-
-        summary = calculate_attendance_summary(
-            total_sessions=total,
-            held_sessions=len(held_sessions),
-            absences=absences,
-            min_attendance_pct=course.min_attendance_pct,
-        )
-
-        results.append(
-            CourseResponse(
-                id=course.id,
-                name=course.name,
-                teacher=course.teacher,
-                workload_hours=course.workload_hours,
-                min_attendance_pct=course.min_attendance_pct,
-                color=course.color,
-                total_sessions=summary.total_sessions,
-                held_sessions=summary.held_sessions,
-                absences=summary.absences,
-                absence_limit=summary.absence_limit,
-                remaining_absences=summary.remaining_absences,
-                current_attendance_pct=summary.current_attendance_pct,
-                projected_attendance_pct=summary.projected_attendance_pct,
-                status=summary.status,
-            )
-        )
-
-    return results
+def list_courses(
+    user_email: str | None = Query(None, description="Filtrar por estudante"),
+    semester: str | None = Query(None, description="Filtrar por semestre"),
+    db: Session = Depends(get_db),
+):
+    query = db.query(Course)
+    if user_email:
+        query = query.filter(Course.user_email == user_email)
+    if semester:
+        query = query.filter(Course.semester == semester)
+    courses = query.order_by(Course.created_at.desc()).all()
+    return [_to_course_response(c, db) for c in courses]
 
 
 @router.post(
     "/attendance",
-    status_code=status.HTTP_200_OK,
-    summary="Marcar presença em uma aula",
+    summary="Registrar presença ou falta em uma aula",
 )
 def mark_attendance(payload: MarkAttendanceRequest, db: Session = Depends(get_db)):
     session = (
@@ -129,19 +132,31 @@ def mark_attendance(payload: MarkAttendanceRequest, db: Session = Depends(get_db
     )
     if not session:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Aula não encontrada."
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Aula com ID {payload.session_id} não encontrada.",
         )
 
-    session.status = "held"
+    record = (
+        db.query(AttendanceRecord)
+        .filter(AttendanceRecord.session_id == payload.session_id)
+        .first()
+    )
 
-    if session.attendance:
-        session.attendance.status = payload.status
-        session.attendance.note = payload.note
+    if record:
+        record.status = payload.status
+        record.note = payload.note
     else:
         record = AttendanceRecord(
-            session_id=session.id, status=payload.status, note=payload.note
+            session_id=payload.session_id,
+            status=payload.status,
+            note=payload.note,
         )
         db.add(record)
 
     db.commit()
-    return {"message": "Presença registrada com sucesso!", "status": payload.status}
+
+    return {
+        "message": "Frequência registrada com sucesso.",
+        "session_id": payload.session_id,
+        "status": payload.status,
+    }

@@ -1,18 +1,18 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import type { AttendanceRecord, AttendanceStatus, NewSubjectInput, Subject } from "@/types";
 import { averageFrequency, getSubjectStats } from "@/lib/attendance";
 import { getSemesterLabel } from "@/lib/calendar";
 import { normalizeSubjects } from "@/lib/migrate";
 import { listSemesters } from "@/lib/semester";
 import { DEMO_SEMESTER, DEMO_SUBJECTS } from "@/data/demo";
+import { api } from "@/lib/api";
 import { usePersistentState } from "./usePersistentState";
 
 /**
  * Disciplinas + registros de presença + semestre selecionado.
- * `subjects` já vem filtrado pelo semestre selecionado: Hoje, Calendário e Simulador
- * usam o mesmo semestre sem precisar filtrar de novo.
+ * Conectado à API com estratégia Offline-First (localStorage + sincronização de fundo).
  */
 export function useSubjects(scope: string) {
   const [allSubjects, setSubjects, subjectsReady] = usePersistentState<Subject[]>(
@@ -28,6 +28,33 @@ export function useSubjects(scope: string) {
     `unihub:${scope}:semester`,
     getSemesterLabel(new Date()),
   );
+
+  // Sincroniza disciplinas do backend ao carregar
+  useEffect(() => {
+    if (!scope) return;
+    api.courses.list(scope).then((remoteCourses) => {
+      if (!remoteCourses || remoteCourses.length === 0) return;
+      setSubjects((prev) => {
+        const remoteMapped: Subject[] = remoteCourses.map((c) => ({
+          id: String(c.id),
+          name: c.name,
+          teacher: c.teacher || "",
+          room: c.room || "",
+          semester: c.semester,
+          weekdays: c.weekdays || [],
+          startTime: c.start_time,
+          endTime: c.end_time,
+          totalClasses: c.total_classes,
+          baseline: { held: c.held_sessions, absences: c.absences },
+          absenceLimit: c.absence_limit,
+        }));
+        // Junta remotas com locais evitando duplicatas
+        const existingIds = new Set(prev.map((s) => s.id));
+        const newOnes = remoteMapped.filter((s) => !existingIds.has(s.id));
+        return [...prev, ...newOnes];
+      });
+    });
+  }, [scope, setSubjects]);
 
   const stats = useMemo(
     () => Object.fromEntries(allSubjects.map((s) => [s.id, getSubjectStats(s, records)])),
@@ -58,10 +85,26 @@ export function useSubjects(scope: string) {
         baseline: { held: input.heldClasses, absences: input.absences },
         absenceLimit: input.absenceLimit,
       };
+
+      // 1. Atualiza estado local imediatamente (UI instantânea)
       setSubjects((prev) => [subject, ...prev]);
-      setSemester(input.semester); // mostra a disciplina nova e atualiza a contagem do semestre dela
+      setSemester(input.semester);
+
+      // 2. Envia para o backend em segundo plano
+      api.courses.create({
+        user_email: scope,
+        name: input.name,
+        teacher: input.teacher,
+        room: input.room,
+        semester: input.semester,
+        weekdays: input.weekdays,
+        start_time: input.startTime,
+        end_time: input.endTime,
+        total_classes: input.totalClasses,
+        workload_hours: input.totalClasses || 60,
+      });
     },
-    [setSubjects, setSemester],
+    [scope, setSubjects, setSemester],
   );
 
   const removeSubject = useCallback(
