@@ -5,7 +5,8 @@ export function displayPct(value: number): number {
   return Math.floor(value + 1e-9);
 }
 
-export function formatPct(value: number): string {
+export function formatPct(value: number | null | undefined): string {
+  if (value === null || value === undefined) return "—";
   return `${displayPct(value)}%`;
 }
 

@@ -3,7 +3,8 @@ import { cn } from "@/lib/cn";
 import { SITUATION_META } from "./situation";
 
 /** Selo de situação (cápsula com ponto): Seguro, Cuidado ou Crítico. */
-export function Badge({ situation }: { situation: AttendanceSituation }) {
+export function Badge({ situation }: { situation?: AttendanceSituation | null }) {
+  if (!situation) return null;
   const { label, badge, dot } = SITUATION_META[situation];
   return (
     <span

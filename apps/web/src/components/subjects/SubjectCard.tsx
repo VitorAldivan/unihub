@@ -22,7 +22,7 @@ export function SubjectCard({ subject, stats, highlighted, onDelete }: SubjectCa
     >
       <header className="flex items-start justify-between gap-3">
         <h3 className="font-display text-xl font-bold leading-tight">{subject.name}</h3>
-        <Badge situation={stats.situation} />
+        {stats.situation && <Badge situation={stats.situation} />}
       </header>
 
       <ul className="mt-3 space-y-1.5 text-sm text-ink-soft">
@@ -54,14 +54,14 @@ export function SubjectCard({ subject, stats, highlighted, onDelete }: SubjectCa
 
       <div className="mt-5">
         <AbsenceStats
-          allowed={stats.allowed}
+          allowed={stats.limit}
           used={stats.absences}
           remaining={stats.remaining}
           situation={stats.situation}
         />
       </div>
 
-      {subject.totalClassesEstimated && (
+      {subject.totalClasses && (
         <p className="mt-3 text-xs text-ink-soft">
           Total de {subject.totalClasses} aulas estimado pelo seu horário.
         </p>
