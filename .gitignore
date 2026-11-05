@@ -62,6 +62,6 @@ coverage/
 .DS_Store
 Thumbs.db
 
-# Banco de dados e uploads locais
-data/
-uploads/
+# Banco de dados e uploads locais (apenas na raiz)
+/data/
+/uploads/
