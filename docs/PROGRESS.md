@@ -32,14 +32,22 @@
   - `POST /api/v1/courses/attendance`: Registro de presença/falta em 1 toque.
 - [x] **Testes Automatizados:** 21 testes (unitários + integração de API) passando com 100% de sucesso.
 - [x] **Documentação Interativa:** Swagger UI ativo e funcionando em `http://localhost:8000/docs`.
+- [x] **Front-end Web (Next.js 14 + Tailwind):**
+  - Identidade visual oficial baseada no Figma: fundo `#BEF8FF`, cards `#C3EBFA`, acentos em Cyan.
+  - Tela "Disciplinas" idêntica ao Figma (cards com professor, local, semáforo com opacidade exata, gráfico circular de frequência e contadores de faltas com ícones).
+  - Modal com botão `+` em Cyan para cadastrar novas disciplinas dinamicamente.
+  - Tela "Hoje" adaptada: botões de ação rápida bem maiores (Presente / Faltei / Cancelada) e simulador removido para aba própria.
+  - Aba "Simulador" dedicada com alternância entre "Por Matéria" e "No Total Geral".
+  - Aba "Calendário" com visualização mensal, marcação de aulas e gaveta de detalhes da matéria (presença, faltas permitidas, totais e utilizadas).
+  - Aba de "Login / Perfil" no mesmo padrão visual.
+  - Barra de navegação inferior (*Bottom Bar*) nativa para iPhone 13.
 
 ## 🔄 Em andamento
-- [ ] Inicialização da aplicação Front-end Web em Next.js (TypeScript + Tailwind CSS + PWA).
+- [ ] Integração do front-end Next.js com as rotas reais da API FastAPI (`fetch` / TanStack Query).
 
 ## 🎯 Próximos passos
-- [ ] Criar a base do app Next.js em `apps/web` (App Router, Tailwind CSS, TypeScript).
-- [ ] Configurar o PWA (manifest.json, ícones para iPhone/Safari).
-- [ ] Construir as telas baseadas no protótipo do Figma: Tela "Hoje" com botões de 1 toque e Tela "Disciplinas".
+- [ ] Conectar os botões do Next.js às chamadas HTTP reais da API FastAPI (`http://localhost:8000`).
+- [ ] Configurar o manifesto PWA (`manifest.json`) com ícones para instalação nativa no iPhone 13.
 
 ## 🚧 Bloqueios / dúvidas
 - Nenhum bloqueio no momento.
