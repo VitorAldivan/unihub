@@ -17,8 +17,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -30,6 +28,10 @@ wheels/
 venv/
 ENV/
 env/
+
+# Forçar inclusão das bibliotecas do frontend
+!apps/web/src/lib/
+!apps/web/src/lib/**
 
 # Node & Next.js
 node_modules/
