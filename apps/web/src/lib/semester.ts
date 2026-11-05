@@ -11,5 +11,5 @@ export function isValidSemester(value: string): boolean {
 /** Opções do seletor: semestres das disciplinas + o selecionado + o semestre do calendário, do mais novo ao mais antigo. */
 export function listSemesters(subjects: Subject[], selected: string, now: Date): string[] {
   const all = new Set<string>([selected, getSemesterLabel(now), ...subjects.map((s) => s.semester)]);
-  return [...all].sort((a, b) => b.localeCompare(a));
+  return Array.from(all).sort((a, b) => b.localeCompare(a));
 }
