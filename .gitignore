@@ -29,9 +29,11 @@ venv/
 ENV/
 env/
 
-# Forçar inclusão das bibliotecas do frontend
-!apps/web/src/lib/
-!apps/web/src/lib/**
+# Forçar inclusão de todo o código fonte do frontend
+!apps/web/src/
+!apps/web/src/**
+!apps/web/public/
+!apps/web/public/**
 
 # Node & Next.js
 node_modules/
