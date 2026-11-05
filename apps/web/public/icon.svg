@@ -1,6 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <rect width="512" height="512" rx="128" fill="#064E3B"/>
-  <path d="M128 340 L128 200 A60 60 0 0 1 248 200 L248 340" fill="none" stroke="#34D399" stroke-width="36" stroke-linecap="round"/>
-  <circle cx="360" cy="200" r="32" fill="#38BDF8"/>
-  <path d="M360 250 L360 340" fill="none" stroke="#38BDF8" stroke-width="36" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#72DDF7" />
+      <stop offset="100%" stop-color="#48CAE4" />
+    </linearGradient>
+  </defs>
+  <!-- Fundo Ciano Arredondado do Figma -->
+  <rect width="512" height="512" rx="140" fill="url(#cyanGrad)"/>
+  
+  <!-- Ícone do Capelo Acadêmico -->
+  <g fill="none" stroke="#1E293B" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Topo do Chapéu (Losango) -->
+    <path d="M256 160 L416 230 L256 300 L96 230 Z" />
+    <!-- Base inferior da cabeça -->
+    <path d="M166 261 V330 C166 365 346 365 346 330 V261" />
+    <!-- Pingente / Tassel -->
+    <path d="M386 245 V340" />
+  </g>
 </svg>
