@@ -16,7 +16,7 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Principal" className="fixed bottom-0 left-0 right-0 w-full h-16 bg-surface pb-[env(safe-area-inset-bottom)] z-50 flex-none">
+    <nav aria-label="Principal" className="shrink-0 bg-surface pb-[env(safe-area-inset-bottom)]">
       <ul className="grid grid-cols-4">
         {ITEMS.map(({ href, label, Icon, match }) => {
           const active = match.some((m) => pathname === m || pathname.startsWith(`${m}/`));
