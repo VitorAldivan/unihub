@@ -13,15 +13,13 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   appleWebApp: { capable: true, statusBarStyle: "black", title: "UniHub" },
-  themeColor: "#27272A",
 };
-
 
 // Zoom liberado de propósito: bloquear o zoom reprova em acessibilidade (WCAG).
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#27272A",
+  themeColor: "#18181B",
   // Teclado virtual: a área visível encolhe em vez de cobrir os campos do formulário.
   interactiveWidget: "resizes-content",
 };
@@ -31,6 +29,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="pt-BR" className={inter.variable}>
       <body className="min-h-screen selection:bg-brand selection:text-brand-on">{children}</body>
     </html>
-
   );
 }
