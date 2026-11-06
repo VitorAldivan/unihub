@@ -29,6 +29,7 @@ interface AcademicValue {
   markAttendance: (subjectId: string, date: string, status: AttendanceStatus) => void;
   addSubject: (input: NewSubjectInput) => void;
   removeSubject: (id: string) => void;
+  updateSubject: (id: string, input: NewSubjectInput) => void;
   addReminder: (input: NewReminderInput) => void;
   removeReminder: (id: string) => void;
   loadDemoData: () => void;
@@ -73,6 +74,7 @@ export function AcademicProvider({ children }: { children: ReactNode }) {
       markAttendance: s.markAttendance,
       addSubject: s.addSubject,
       removeSubject,
+      updateSubject: s.updateSubject,
       addReminder: r.addReminder,
       removeReminder: r.removeReminder,
       loadDemoData,

@@ -10,6 +10,20 @@ import { Field, inputClass } from "@/components/ui/Field";
 
 interface SubjectFormProps {
   defaultSemester: string;
+  initialValues?: {
+    name: string;
+    teacher: string;
+    room: string;
+    semester: string;
+    weekdays: number[];
+    startTime: string;
+    endTime: string;
+    total: string;
+    held: string;
+    absences: string;
+    limit: string;
+  };
+  submitLabel?: string;
   onSubmit: (input: NewSubjectInput) => void;
   onCancel: () => void;
 }
@@ -17,20 +31,22 @@ interface SubjectFormProps {
 type Text = { target: { value: string } };
 
 /** Formulário local. Campo vazio = dado ausente (aparece como "—"), nunca zero. */
-export function SubjectForm({ defaultSemester, onSubmit, onCancel }: SubjectFormProps) {
-  const [values, setValues] = useState({
-    name: "",
-    teacher: "",
-    room: "",
-    semester: defaultSemester,
-    startTime: "",
-    endTime: "",
-    total: "",
-    held: "",
-    absences: "",
-    limit: "",
-  });
-  const [weekdays, setWeekdays] = useState<number[]>([]);
+export function SubjectForm({ defaultSemester, initialValues, submitLabel = "Adicionar disciplina", onSubmit, onCancel }: SubjectFormProps) {
+  const [values, setValues] = useState(
+    initialValues ?? {
+      name: "",
+      teacher: "",
+      room: "",
+      semester: defaultSemester,
+      startTime: "",
+      endTime: "",
+      total: "",
+      held: "",
+      absences: "",
+      limit: "",
+    },
+  );
+  const [weekdays, setWeekdays] = useState<number[]>(initialValues?.weekdays ?? []);
   const [errors, setErrors] = useState<SubjectFormErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -143,7 +159,7 @@ export function SubjectForm({ defaultSemester, onSubmit, onCancel }: SubjectForm
           Cancelar
         </Button>
         <Button type="submit" className="text-center leading-tight">
-          Adicionar disciplina
+          {submitLabel}
         </Button>
       </div>
     </form>

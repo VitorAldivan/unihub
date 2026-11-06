@@ -115,6 +115,31 @@ export function useSubjects(scope: string) {
     [setSubjects, setRecords],
   );
 
+  const updateSubject = useCallback(
+    (id: string, input: NewSubjectInput) => {
+      setSubjects((prev) =>
+        prev.map((s) =>
+          s.id !== id
+            ? s
+            : {
+                ...s,
+                name: input.name,
+                teacher: input.teacher,
+                room: input.room,
+                semester: input.semester,
+                weekdays: input.weekdays,
+                startTime: input.startTime,
+                endTime: input.endTime,
+                totalClasses: input.totalClasses,
+                baseline: { held: input.heldClasses, absences: input.absences },
+                absenceLimit: input.absenceLimit,
+              },
+        ),
+      );
+    },
+    [setSubjects],
+  );
+
   /** Tocar de novo no mesmo status desfaz o registro. */
   const markAttendance = useCallback(
     (subjectId: string, date: string, status: AttendanceStatus) => {
@@ -153,6 +178,7 @@ export function useSubjects(scope: string) {
     hydrated: subjectsReady && recordsReady && semesterReady,
     addSubject,
     removeSubject,
+    updateSubject,
     markAttendance,
     getAttendanceStatus,
     loadDemoData,
