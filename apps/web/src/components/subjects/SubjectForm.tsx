@@ -32,21 +32,20 @@ type Text = { target: { value: string } };
 
 /** Formulário local. Campo vazio = dado ausente (aparece como "—"), nunca zero. */
 export function SubjectForm({ defaultSemester, initialValues, submitLabel = "Adicionar disciplina", onSubmit, onCancel }: SubjectFormProps) {
-  const [values, setValues] = useState(
-    initialValues ?? {
-      name: "",
-      teacher: "",
-      room: "",
-      semester: defaultSemester,
-      startTime: "",
-      endTime: "",
-      total: "",
-      held: "",
-      absences: "",
-      limit: "",
-    },
-  );
-  const [weekdays, setWeekdays] = useState<number[]>(initialValues?.weekdays ?? []);
+  const { weekdays: initWeekdays, ...initFields } = initialValues ?? {};
+  const [values, setValues] = useState({
+    name: initFields.name ?? "",
+    teacher: initFields.teacher ?? "",
+    room: initFields.room ?? "",
+    semester: initFields.semester ?? defaultSemester,
+    startTime: initFields.startTime ?? "",
+    endTime: initFields.endTime ?? "",
+    total: initFields.total ?? "",
+    held: initFields.held ?? "",
+    absences: initFields.absences ?? "",
+    limit: initFields.limit ?? "",
+  });
+  const [weekdays, setWeekdays] = useState<number[]>(initWeekdays ?? []);
   const [errors, setErrors] = useState<SubjectFormErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
 
