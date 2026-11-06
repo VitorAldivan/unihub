@@ -4,7 +4,8 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
-export const metadata: Metadata = {
+  themeColor: "#27272A",
+
   title: "UniHub — Plataforma Acadêmica",
   description: "Controle de faltas e frequência para universitários.",
   manifest: "/manifest.json",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#18181B",
+  themeColor: "#27272A",
   // Teclado virtual: a área visível encolhe em vez de cobrir os campos do formulário.
   interactiveWidget: "resizes-content",
 };
@@ -29,5 +30,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="pt-BR" className={inter.variable}>
       <body className="min-h-screen selection:bg-brand selection:text-brand-on">{children}</body>
     </html>
+
   );
 }
