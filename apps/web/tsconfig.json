@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "downlevelIteration": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -13,7 +12,6 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "ignoreDeprecations": "6.0",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -28,7 +26,7 @@
         "./src/*"
       ]
     },
-    "moduleResolution": "node"
+    "moduleResolution": "bundler"
   },
   "include": [
     "next-env.d.ts",
