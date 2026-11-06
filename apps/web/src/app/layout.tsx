@@ -4,8 +4,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
-  themeColor: "#27272A",
-
+export const metadata: Metadata = {
   title: "UniHub — Plataforma Acadêmica",
   description: "Controle de faltas e frequência para universitários.",
   manifest: "/manifest.json",
@@ -14,7 +13,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
     apple: "/icon.svg",
   },
   appleWebApp: { capable: true, statusBarStyle: "black", title: "UniHub" },
+  themeColor: "#27272A",
 };
+
 
 // Zoom liberado de propósito: bloquear o zoom reprova em acessibilidade (WCAG).
 export const viewport: Viewport = {
