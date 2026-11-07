@@ -19,6 +19,12 @@ export function validateEmail(raw: string): string | undefined {
   return undefined;
 }
 
+export function validatePassword(password: string): string | undefined {
+  if (password.length === 0) return MSG.passwordEmpty;
+  if (password.length < 6) return "A senha deve ter pelo menos 6 caracteres.";
+  return undefined;
+}
+
 export interface LoginValues {
   email: string;
   password: string;

@@ -132,10 +132,10 @@ export const api = {
       });
     },
 
-    forgotPassword(email: string): Promise<ApiResponse<{ message: string; exists: boolean }>> {
-      return requestWithDetails<{ message: string; exists: boolean }>("/auth/forgot-password", {
+    forgotPassword(email: string, newPassword: string): Promise<ApiResponse<{ message: string; success: boolean }>> {
+      return requestWithDetails<{ message: string; success: boolean }>("/auth/forgot-password", {
         method: "POST",
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, new_password: newPassword }),
       });
     },
   },
