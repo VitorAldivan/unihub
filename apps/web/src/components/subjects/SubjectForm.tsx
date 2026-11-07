@@ -10,20 +10,6 @@ import { Field, inputClass } from "@/components/ui/Field";
 
 interface SubjectFormProps {
   defaultSemester: string;
-  initialValues?: {
-    name: string;
-    teacher: string;
-    room: string;
-    semester: string;
-    weekdays: number[];
-    startTime: string;
-    endTime: string;
-    total: string;
-    held: string;
-    absences: string;
-    limit: string;
-  };
-  submitLabel?: string;
   onSubmit: (input: NewSubjectInput) => void;
   onCancel: () => void;
 }
@@ -31,21 +17,20 @@ interface SubjectFormProps {
 type Text = { target: { value: string } };
 
 /** Formulário local. Campo vazio = dado ausente (aparece como "—"), nunca zero. */
-export function SubjectForm({ defaultSemester, initialValues, submitLabel = "Adicionar disciplina", onSubmit, onCancel }: SubjectFormProps) {
-  const { weekdays: initWeekdays, ...initFields } = initialValues ?? {};
+export function SubjectForm({ defaultSemester, onSubmit, onCancel }: SubjectFormProps) {
   const [values, setValues] = useState({
-    name: initFields.name ?? "",
-    teacher: initFields.teacher ?? "",
-    room: initFields.room ?? "",
-    semester: initFields.semester ?? defaultSemester,
-    startTime: initFields.startTime ?? "",
-    endTime: initFields.endTime ?? "",
-    total: initFields.total ?? "",
-    held: initFields.held ?? "",
-    absences: initFields.absences ?? "",
-    limit: initFields.limit ?? "",
+    name: "",
+    teacher: "",
+    room: "",
+    semester: defaultSemester,
+    startTime: "",
+    endTime: "",
+    total: "",
+    held: "",
+    absences: "",
+    limit: "",
   });
-  const [weekdays, setWeekdays] = useState<number[]>(initWeekdays ?? []);
+  const [weekdays, setWeekdays] = useState<number[]>([]);
   const [errors, setErrors] = useState<SubjectFormErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -158,7 +143,7 @@ export function SubjectForm({ defaultSemester, initialValues, submitLabel = "Adi
           Cancelar
         </Button>
         <Button type="submit" className="text-center leading-tight">
-          {submitLabel}
+          Adicionar disciplina
         </Button>
       </div>
     </form>

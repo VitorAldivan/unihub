@@ -62,7 +62,23 @@ export interface ApiSimulateResponse {
   message: string;
 }
 
-async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T | null> {
+export interface ApiAuthUser {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface ApiAuthResponse {
+  message: string;
+  user: ApiAuthUser;
+}
+
+export interface ApiResponse<T> {
+  data: T | null;
+  error?: string;
+}
+
+async function requestWithDetails<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
   try {
     const res = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
@@ -72,17 +88,23 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
       },
     });
 
+    const json = await res.json().catch(() => null);
+
     if (!res.ok) {
-      console.warn(`API Error [${res.status}]: ${endpoint}`);
-      return null;
+      const errorMsg = json?.detail || json?.message || `Erro ${res.status}`;
+      return { data: null, error: errorMsg };
     }
 
-    return await res.json();
-  } catch (err) {
-    // Falha silenciosa de rede para não travar a UI caso o backend esteja offline
+    return { data: json as T };
+  } catch (err: any) {
     console.warn(`Falha na requisição API (${endpoint}):`, err);
-    return null;
+    return { data: null, error: "Servidor indisponível ou offline." };
   }
+}
+
+async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T | null> {
+  const result = await requestWithDetails<T>(endpoint, options);
+  return result.data;
 }
 
 export const api = {
@@ -93,6 +115,29 @@ export const api = {
     } catch {
       return false;
     }
+  },
+
+  auth: {
+    register(payload: { name: string; email: string; password: string }): Promise<ApiResponse<ApiAuthResponse>> {
+      return requestWithDetails<ApiAuthResponse>("/auth/register", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+    },
+
+    login(payload: { email: string; password: string }): Promise<ApiResponse<ApiAuthResponse>> {
+      return requestWithDetails<ApiAuthResponse>("/auth/login", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+    },
+
+    forgotPassword(email: string): Promise<ApiResponse<{ message: string; exists: boolean }>> {
+      return requestWithDetails<{ message: string; exists: boolean }>("/auth/forgot-password", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+    },
   },
 
   courses: {

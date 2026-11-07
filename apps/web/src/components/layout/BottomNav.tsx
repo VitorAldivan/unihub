@@ -2,24 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Calculator, CalendarDays, House, Layers } from "lucide-react";
+import { CalendarDays, House, Layers, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/cn";
 
+// Para adicionar uma aba (ex.: Simulador), basta incluir um item aqui e mudar grid-cols-4.
 const ITEMS = [
   { href: "/home", label: "Hoje", Icon: House, match: ["/home"] },
-  { href: "/disciplinas", label: "Disciplinas", Icon: Layers, match: ["/disciplinas"] },
-  { href: "/simulador", label: "Simular faltas", Icon: Calculator, match: ["/simulador"] },
+  { href: "/disciplinas", label: "Disciplinas", Icon: Layers, match: ["/disciplinas", "/simulador"] },
   { href: "/calendario", label: "Calendário", Icon: CalendarDays, match: ["/calendario"] },
+  { href: "/ajustes", label: "Ajustes", Icon: SlidersHorizontal, match: ["/ajustes"] },
 ] as const;
 
 export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav
-      aria-label="Principal"
-      className="shrink-0 select-none touch-none bg-surface pb-[env(safe-area-inset-bottom)]"
-    >
+    <nav aria-label="Principal" className="shrink-0 bg-surface pb-[env(safe-area-inset-bottom)]">
       <ul className="grid grid-cols-4">
         {ITEMS.map(({ href, label, Icon, match }) => {
           const active = match.some((m) => pathname === m || pathname.startsWith(`${m}/`));

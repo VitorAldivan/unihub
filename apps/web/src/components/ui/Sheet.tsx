@@ -89,7 +89,7 @@ export function Sheet({ open, onClose, title, children }: SheetProps) {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Fechar"
+            aria-label="Fechar janela"
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink-soft hover:bg-ink/5"
           >
             <X className="h-5 w-5" aria-hidden />

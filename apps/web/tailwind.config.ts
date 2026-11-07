@@ -9,8 +9,8 @@ const config: Config = {
       colors: {
         paper: "#18181B", // fundo principal
         surface: "#27272A", // navegação, botões, cartões secundários
-        line: "#3F3F47", // divisores e trilho da frequência
-        ink: { DEFAULT: "#E4E4E7", soft: "#A8A8B2" },
+        line: { DEFAULT: "#3F3F47", field: "#52525C" }, // divisores e trilho · borda dos campos
+        ink: { DEFAULT: "#E4E4E7", soft: "#A8A8B2", faint: "#92929C" }, // faint: placeholder
         brand: {
           DEFAULT: "#75CBD8", // destaque
           deep: "#5BB5C3", // hover sobre o destaque

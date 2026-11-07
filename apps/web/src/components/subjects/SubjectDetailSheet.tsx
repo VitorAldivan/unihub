@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Calculator, CalendarDays, Clock, MapPin, Pencil, Trash2, User } from "lucide-react";
+import { Calculator, CalendarDays, Clock, MapPin, Trash2, User } from "lucide-react";
 import type { AttendanceStats, Subject } from "@/types";
 import { describeAbsenceSummary, formatPct, formatTimeRange, formatWeekdays } from "@/lib/format";
 import { AbsenceStats } from "@/components/attendance/AbsenceStats";
@@ -16,14 +16,13 @@ interface SubjectDetailSheetProps {
   stats?: AttendanceStats;
   onClose: () => void;
   onDelete: (subject: Subject) => void;
-  onEdit: (subject: Subject) => void;
 }
 
 /** Painel local com as informações da disciplina (sem tela nova). */
-export function SubjectDetailSheet({ subject, stats, onClose, onDelete, onEdit }: SubjectDetailSheetProps) {
+export function SubjectDetailSheet({ subject, stats, onClose, onDelete }: SubjectDetailSheetProps) {
   return (
     <Sheet open={subject !== null} onClose={onClose} title={subject?.name ?? ""}>
-      {subject && stats && <Body key={subject.id} subject={subject} stats={stats} onDelete={onDelete} onEdit={onEdit} />}
+      {subject && stats && <Body key={subject.id} subject={subject} stats={stats} onDelete={onDelete} />}
     </Sheet>
   );
 }
@@ -32,12 +31,10 @@ function Body({
   subject,
   stats,
   onDelete,
-  onEdit,
 }: {
   subject: Subject;
   stats: AttendanceStats;
   onDelete: (subject: Subject) => void;
-  onEdit: (subject: Subject) => void;
 }) {
   const [confirming, setConfirming] = useState(false);
 
@@ -105,11 +102,6 @@ function Body({
           <Calculator className="h-4 w-4" aria-hidden />
           Simular faltas
         </Link>
-
-        <Button variant="secondary" className="w-full" onClick={() => onEdit(subject)}>
-          <Pencil className="h-4 w-4" aria-hidden />
-          Editar disciplina
-        </Button>
 
         {confirming ? (
           <div className="rounded-xl border border-crit/40 bg-crit-soft p-4">

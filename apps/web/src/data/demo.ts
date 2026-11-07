@@ -110,3 +110,12 @@ export function buildDemoReminder(from: Date): Reminder {
     time: "10:20",
   };
 }
+
+/** Exemplo VISUAL da tela de login (Figma): valores fictícios, nunca credenciais reais. */
+export const LOGIN_PREFILL_EXAMPLE = { email: "lucas.silva@aluno.edu.br", password: "senha-demo" };
+
+/**
+ * Estado preenchido da tela de login. Para comparar com o Figma, troque `null` por
+ * `LOGIN_PREFILL_EXAMPLE` (sem criar controle de teste na interface). A senha nunca é salva.
+ */
+export const LOGIN_PREFILL: { email: string; password: string } | null = null;

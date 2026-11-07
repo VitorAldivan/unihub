@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import Base, engine
+from app.modules.attendance.models.user import User  # Garante que o modelo User seja registrado no Base
 from app.modules.attendance.routers.attendance import router as attendance_router
+from app.modules.attendance.routers.auth import router as auth_router
 from app.modules.attendance.routers.courses import router as courses_router
 
 # Cria as tabelas no banco de dados automaticamente ao inicializar
@@ -24,6 +26,7 @@ app.add_middleware(
 )
 
 # Registro dos módulos da aplicação
+app.include_router(auth_router)
 app.include_router(attendance_router)
 app.include_router(courses_router)
 

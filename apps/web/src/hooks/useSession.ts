@@ -24,8 +24,11 @@ export function useSession() {
     setReady(true);
   }, []);
 
-  const login = useCallback((email: string) => {
-    const next: UserSession = { email: email.trim().toLowerCase(), name: nameFromEmail(email) };
+  const login = useCallback((email: string, name?: string) => {
+    const next: UserSession = {
+      email: email.trim().toLowerCase(),
+      name: name && name.trim().length > 0 ? name.trim() : nameFromEmail(email),
+    };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     setSession(next);
   }, []);
