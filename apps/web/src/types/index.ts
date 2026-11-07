@@ -44,7 +44,7 @@ export interface NewSubjectInput {
 
 export interface AttendanceRecord {
   subjectId: string;
-  /** "YYYY-MM-DD" (data local) */
+  /** "YYYY-MM-DD" ou "YYYY-MM-DD:slot" quando houver 2 aulas no mesmo dia */
   date: string;
   status: AttendanceStatus;
 }

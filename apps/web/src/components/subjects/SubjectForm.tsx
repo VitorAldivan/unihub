@@ -43,6 +43,23 @@ export function SubjectForm({ defaultSemester, onSubmit, onCancel }: SubjectForm
     setWeekdays((prev) => (prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]));
   }
 
+  // Assistente de duração de aula (padrão 1h45 com intervalo de 30m para bloco duplo)
+  function handleSelectDuration(classCount: 1 | 2) {
+    if (!values.startTime) return;
+    const [h, m] = values.startTime.split(":").map(Number);
+    if (isNaN(h) || isNaN(m)) return;
+
+    const startMin = h * 60 + m;
+    // 1 aula = 105 min (1h45); 2 aulas = 105 + 30 (intervalo) + 105 = 240 min (4h)
+    const durationMin = classCount === 1 ? 105 : 240;
+    const endMin = startMin + durationMin;
+    const endH = Math.floor(endMin / 60) % 24;
+    const endM = endMin % 60;
+    const endStr = `${String(endH).padStart(2, "0")}:${String(endM).padStart(2, "0")}`;
+
+    setValues((v) => ({ ...v, endTime: endStr }));
+  }
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const { errors: next, input } = validateSubjectForm({ ...values, weekdays });
@@ -126,13 +143,49 @@ export function SubjectForm({ defaultSemester, onSubmit, onCancel }: SubjectForm
           })}
         </div>
         {weekdays.length > 0 && (
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            <Field label="Início" error={errors.schedule}>
-              <input type="time" className={inputClass} {...bind("startTime")} aria-invalid={invalid("schedule")} />
-            </Field>
-            <Field label="Fim">
-              <input type="time" className={inputClass} {...bind("endTime")} aria-invalid={invalid("schedule")} />
-            </Field>
+          <div className="mt-3 space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Início da aula" error={errors.schedule}>
+                <input
+                  type="time"
+                  className={inputClass}
+                  {...bind("startTime")}
+                  aria-invalid={invalid("schedule")}
+                />
+              </Field>
+              <Field label="Término da aula">
+                <input
+                  type="time"
+                  className={inputClass}
+                  {...bind("endTime")}
+                  aria-invalid={invalid("schedule")}
+                />
+              </Field>
+            </div>
+
+            {values.startTime && (
+              <div className="rounded-xl border border-line bg-paper p-3 text-xs">
+                <span className="font-medium text-ink-soft">Atalho de duração no dia:</span>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleSelectDuration(1)}
+                    className="rounded-lg border border-line px-2.5 py-1.5 text-left text-xs transition-colors hover:border-brand hover:text-brand"
+                  >
+                    <span className="block font-semibold">1 aula (1h45)</span>
+                    <span className="text-[10px] text-ink-soft">Sem intervalo</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSelectDuration(2)}
+                    className="rounded-lg border border-line px-2.5 py-1.5 text-left text-xs transition-colors hover:border-brand hover:text-brand"
+                  >
+                    <span className="block font-semibold">2 aulas (bloco duplo)</span>
+                    <span className="text-[10px] text-ink-soft">Com intervalo de 30m</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </fieldset>

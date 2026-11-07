@@ -18,7 +18,7 @@ class Course(Base):
     end_time: Mapped[str] = mapped_column(String(10), default="", nullable=False)
     workload_hours: Mapped[int] = mapped_column(Integer, default=60, nullable=False)
     total_classes: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    min_attendance_pct: Mapped[int] = mapped_column(Integer, default=75, nullable=False)
+    min_attendance_pct: Mapped[int] = mapped_column(Integer, default=70, nullable=False)
     color: Mapped[str] = mapped_column(String(20), default="#0EA5E9", nullable=False)
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc)

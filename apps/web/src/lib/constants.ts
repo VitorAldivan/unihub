@@ -1,11 +1,10 @@
 import type { ReminderKind } from "@/types";
 
 /**
- * Mínimo de presença usado SÓ para derivar o limite de faltas quando o aluno
- * informa o total de aulas mas não informa o limite. Configurável; cada
- * faculdade tem seu regulamento.
+ * Mínimo de presença usado para derivar o limite de faltas e calcular a situação acadêmica.
+ * Configurado para 70% conforme o regulamento da faculdade.
  */
-export const MIN_ATTENDANCE_PCT = 75;
+export const MIN_ATTENDANCE_PCT = 70;
 
 /** Situação pelo uso do limite de faltas (AGENTS.md D3). Configuráveis. */
 export const WARNING_USAGE_PCT = 80;
