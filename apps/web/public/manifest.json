@@ -2,7 +2,7 @@
   "name": "UniHub — Plataforma Acadêmica",
   "short_name": "UniHub",
   "description": "Controle inteligente de faltas e frequência para universitários",
-  "start_url": "/home",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#27272A",
   "theme_color": "#27272A",

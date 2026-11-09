@@ -7,6 +7,11 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 export const metadata: Metadata = {
   title: "UniHub — Plataforma Acadêmica",
   description: "Controle de faltas e frequência para universitários.",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
   appleWebApp: { capable: true, statusBarStyle: "black", title: "UniHub" },
 };
 
