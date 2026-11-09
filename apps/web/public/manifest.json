@@ -4,8 +4,8 @@
   "description": "Controle inteligente de faltas e frequência para universitários",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#27272A",
-  "theme_color": "#27272A",
+  "background_color": "#18181B",
+  "theme_color": "#18181B",
   "orientation": "portrait",
   "icons": [
     {
