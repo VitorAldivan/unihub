@@ -5,8 +5,8 @@ import type { SessionPhase } from "@/lib/schedule";
 import { formatClassCount } from "@/lib/format";
 import { Button, buttonStyles } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { ClassListItem } from "./ClassListItem";
-import { NextClassCard } from "./NextClassCard";
+import { ItemListaAula } from "./ItemListaAula";
+import { CartaoProximaAula } from "./CartaoProximaAula";
 
 interface ClassesSectionProps {
   sessions: ClassSession[];
@@ -18,7 +18,7 @@ interface ClassesSectionProps {
 }
 
 /** "Aulas de hoje": cartão em destaque + lista compacta. Cresce com qualquer quantidade de aulas. */
-export function ClassesSection({
+export function SecaoAulas({
   sessions,
   featured,
   hasSubjects,
@@ -58,7 +58,7 @@ export function ClassesSection({
         ) : (
           <>
             {featured && (
-              <NextClassCard
+              <CartaoProximaAula
                 session={featured.session}
                 phase={featured.phase}
                 onMark={(status) => onMark(featured.session, status)}
@@ -67,7 +67,7 @@ export function ClassesSection({
             {others.length > 0 && (
               <ul className={featured ? "mt-3" : undefined}>
                 {others.map((session) => (
-                  <ClassListItem key={session.id} session={session} onOpen={() => onOpenDetails(session)} />
+                  <ItemListaAula key={session.id} session={session} onOpen={() => onOpenDetails(session)} />
                 ))}
               </ul>
             )}
@@ -77,3 +77,5 @@ export function ClassesSection({
     </section>
   );
 }
+
+export { SecaoAulas as ClassesSection };

@@ -9,7 +9,7 @@ interface AttendanceButtonProps {
 }
 
 /** Botão de um registro de presença. Seleção = anel + aria-pressed (não depende só da cor). */
-export function AttendanceButton({ status, selected, onClick }: AttendanceButtonProps) {
+export function BotaoPresenca({ status, selected, onClick }: AttendanceButtonProps) {
   const { label, Icon } = STATUS_META[status];
   return (
     <button
@@ -26,3 +26,5 @@ export function AttendanceButton({ status, selected, onClick }: AttendanceButton
     </button>
   );
 }
+
+export { BotaoPresenca as AttendanceButton };

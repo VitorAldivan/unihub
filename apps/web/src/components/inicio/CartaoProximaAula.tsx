@@ -4,7 +4,7 @@ import type { SessionPhase } from "@/lib/schedule";
 import { cn } from "@/lib/cn";
 import { describeRemaining } from "@/lib/format";
 import { SITUATION_META } from "@/components/ui/situation";
-import { AttendanceControls } from "./AttendanceControls";
+import { ControlesFrequencia } from "./ControlesFrequencia";
 
 const PHASE_LABEL: Record<SessionPhase, string> = {
   upcoming: "Próxima aula",
@@ -19,7 +19,7 @@ interface NextClassCardProps {
 }
 
 /** Cartão de maior destaque: a aula que pede atenção agora. */
-export function NextClassCard({ session, phase, onMark }: NextClassCardProps) {
+export function CartaoProximaAula({ session, phase, onMark }: NextClassCardProps) {
   const headingId = useId();
   const details = [session.room, session.teacher].filter(Boolean).join(" · ");
   const meta = session.situation ? SITUATION_META[session.situation] : null;
@@ -50,8 +50,10 @@ export function NextClassCard({ session, phase, onMark }: NextClassCardProps) {
 
       <div className="mt-4 border-t border-brand-line pt-4">
         <p className="mb-3 text-[13px]">Como foi sua presença?</p>
-        <AttendanceControls status={session.status} onChange={onMark} />
+        <ControlesFrequencia status={session.status} onChange={onMark} />
       </div>
     </article>
   );
 }
+
+export { CartaoProximaAula as NextClassCard };

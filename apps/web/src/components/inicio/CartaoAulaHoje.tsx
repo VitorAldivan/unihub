@@ -16,7 +16,7 @@ interface TodayClassCardProps {
   onMark: (status: AttendanceStatus) => void;
 }
 
-export function TodayClassCard({ subject, situation, status, onMark }: TodayClassCardProps) {
+export function CartaoAulaHoje({ subject, situation, status, onMark }: TodayClassCardProps) {
   const details = [subject.room, subject.teacher && `prof. ${subject.teacher}`].filter(Boolean).join(", ");
 
   return (
@@ -56,3 +56,5 @@ export function TodayClassCard({ subject, situation, status, onMark }: TodayClas
     </li>
   );
 }
+
+export { CartaoAulaHoje as TodayClassCard };

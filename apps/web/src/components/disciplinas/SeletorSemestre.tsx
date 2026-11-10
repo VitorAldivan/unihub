@@ -7,7 +7,7 @@ interface SemesterSelectProps {
 }
 
 /** <select> nativo (acessível e confortável no celular) com o chevron sobreposto por grid, sem posicionamento absoluto. */
-export function SemesterSelect({ value, options, onChange }: SemesterSelectProps) {
+export function SeletorSemestre({ value, options, onChange }: SemesterSelectProps) {
   return (
     <div className="grid shrink-0 items-center">
       <select
@@ -26,3 +26,5 @@ export function SemesterSelect({ value, options, onChange }: SemesterSelectProps
     </div>
   );
 }
+
+export { SeletorSemestre as SemesterSelect };

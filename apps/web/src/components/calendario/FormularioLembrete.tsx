@@ -13,7 +13,7 @@ interface ReminderFormProps {
   onSubmit: (input: NewReminderInput) => void;
 }
 
-export function ReminderForm({ defaultDate, subjects, onSubmit }: ReminderFormProps) {
+export function FormularioLembrete({ defaultDate, subjects, onSubmit }: ReminderFormProps) {
   const [title, setTitle] = useState("");
   const [kind, setKind] = useState<ReminderKind>("exam");
   const [date, setDate] = useState(defaultDate);
@@ -73,3 +73,5 @@ export function ReminderForm({ defaultDate, subjects, onSubmit }: ReminderFormPr
     </form>
   );
 }
+
+export { FormularioLembrete as ReminderForm };

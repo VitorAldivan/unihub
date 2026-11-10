@@ -4,7 +4,7 @@ import type { AttendanceStats, Subject } from "@/types";
 import { cn } from "@/lib/cn";
 import { describeAbsenceSummary } from "@/lib/format";
 import { Badge } from "@/components/ui/Badge";
-import { SubjectMetrics } from "./SubjectMetrics";
+import { MetricasDisciplina } from "./MetricasDisciplina";
 
 interface SubjectItemProps {
   subject: Subject;
@@ -14,7 +14,7 @@ interface SubjectItemProps {
 }
 
 /** Bloco aberto sobre o fundo, separado dos outros por uma linha (sem cartão, borda arredondada ou sombra). */
-export function SubjectItem({ subject, stats, highlighted, onOpen }: SubjectItemProps) {
+export function ItemDisciplina({ subject, stats, highlighted, onOpen }: SubjectItemProps) {
   const headingId = useId();
 
   return (
@@ -42,7 +42,7 @@ export function SubjectItem({ subject, stats, highlighted, onOpen }: SubjectItem
           {stats.situation && <Badge situation={stats.situation} />}
         </header>
 
-        <SubjectMetrics name={subject.name} stats={stats} />
+        <MetricasDisciplina name={subject.name} stats={stats} />
 
         {/* Único botão do bloco: sem botões aninhados. Área de toque de 44 px mesmo com texto pequeno. */}
         <button
@@ -61,3 +61,5 @@ export function SubjectItem({ subject, stats, highlighted, onOpen }: SubjectItem
     </li>
   );
 }
+
+export { ItemDisciplina as SubjectItem };

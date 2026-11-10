@@ -8,7 +8,7 @@ interface HomeHeaderProps {
   greeting: string;
 }
 
-export function HomeHeader({ name, initials, dateLabel, greeting }: HomeHeaderProps) {
+export function CabecalhoInicio({ name, initials, dateLabel, greeting }: HomeHeaderProps) {
   return (
     <header>
       <div className="flex items-center justify-between gap-3">
@@ -31,3 +31,5 @@ export function HomeHeader({ name, initials, dateLabel, greeting }: HomeHeaderPr
     </header>
   );
 }
+
+export { CabecalhoInicio as HomeHeader };

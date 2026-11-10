@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAcademic } from "@/context/AcademicProvider";
 import { useToast } from "@/hooks/useToast";
-import { NewSubjectButton } from "@/components/subjects/NewSubjectButton";
-import { SubjectDetailSheet } from "@/components/subjects/SubjectDetailSheet";
-import { SubjectForm } from "@/components/subjects/SubjectForm";
-import { SubjectList } from "@/components/subjects/SubjectList";
-import { SubjectsHeader } from "@/components/subjects/SubjectsHeader";
-import { SubjectsNote } from "@/components/subjects/SubjectsNote";
-import { SubjectsSummary } from "@/components/subjects/SubjectsSummary";
+import { BotaoNovaDisciplina } from "@/components/disciplinas/BotaoNovaDisciplina";
+import { ModalDetalheDisciplina } from "@/components/disciplinas/ModalDetalheDisciplina";
+import { FormularioDisciplina } from "@/components/disciplinas/FormularioDisciplina";
+import { ListaDisciplinas } from "@/components/disciplinas/ListaDisciplinas";
+import { CabecalhoDisciplinas } from "@/components/disciplinas/CabecalhoDisciplinas";
+import { NotaDisciplinas } from "@/components/disciplinas/NotaDisciplinas";
+import { ResumoDisciplinas } from "@/components/disciplinas/ResumoDisciplinas";
 import { Sheet } from "@/components/ui/Sheet";
 import { Toast } from "@/components/ui/Toast";
 
@@ -33,10 +33,10 @@ export default function SubjectsPage() {
 
   return (
     <div className="px-6 pb-10 pt-6">
-      <SubjectsHeader />
+      <CabecalhoDisciplinas />
 
       <div className="mt-6">
-        <SubjectsSummary
+        <ResumoDisciplinas
           count={subjects.length}
           semester={semester}
           semesters={semesters}
@@ -45,10 +45,10 @@ export default function SubjectsPage() {
       </div>
 
       <div className="mt-6">
-        <NewSubjectButton onClick={() => setFormOpen(true)} />
+        <BotaoNovaDisciplina onClick={() => setFormOpen(true)} />
       </div>
 
-      <SubjectList
+      <ListaDisciplinas
         subjects={subjects}
         stats={stats}
         focusId={focusId}
@@ -57,10 +57,10 @@ export default function SubjectsPage() {
         onLoadDemo={loadDemoData}
       />
 
-      <SubjectsNote />
+      <NotaDisciplinas />
 
       <Sheet open={formOpen} onClose={() => setFormOpen(false)} title="Nova disciplina" hideHeader>
-        <SubjectForm
+        <FormularioDisciplina
           defaultSemester={semester}
           onCancel={() => setFormOpen(false)}
           onSubmit={(input) => {
@@ -71,7 +71,7 @@ export default function SubjectsPage() {
         />
       </Sheet>
 
-      <SubjectDetailSheet
+      <ModalDetalheDisciplina
         subject={detail}
         stats={detail ? stats[detail.id] : undefined}
         onClose={() => setDetailId(null)}

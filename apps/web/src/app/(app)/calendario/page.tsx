@@ -8,8 +8,8 @@ import { useAcademic } from "@/context/AcademicProvider";
 import { formatDayHeading, formatMonthTitle, isSameDay, toISODate } from "@/lib/calendar";
 import { REMINDER_KINDS } from "@/lib/constants";
 import { formatTimeRange } from "@/lib/format";
-import { MonthGrid } from "@/components/calendar/MonthGrid";
-import { ReminderForm } from "@/components/calendar/ReminderForm";
+import { GradeMes } from "@/components/calendario/GradeMes";
+import { FormularioLembrete } from "@/components/calendario/FormularioLembrete";
 import { buttonStyles } from "@/components/ui/Button";
 import { Sheet } from "@/components/ui/Sheet";
 
@@ -73,7 +73,7 @@ export default function CalendarPage() {
             </button>
           </div>
         </div>
-        <MonthGrid
+        <GradeMes
           year={view.getFullYear()}
           month={view.getMonth()}
           selected={selected}
@@ -157,7 +157,7 @@ export default function CalendarPage() {
       </section>
 
       <Sheet open={reminderOpen} onClose={() => setReminderOpen(false)} title="Novo lembrete">
-        <ReminderForm
+        <FormularioLembrete
           defaultDate={selectedISO}
           subjects={subjects}
           onSubmit={(input) => {

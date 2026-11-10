@@ -14,7 +14,7 @@ import { usePersistentState } from "./usePersistentState";
  * `subjects` já vem filtrado pelo semestre selecionado: Hoje, Calendário e Simulador
  * usam o mesmo semestre sem precisar filtrar de novo.
  */
-export function useSubjects(scope: string) {
+export function useDisciplinas(scope: string) {
   const [allSubjects, setSubjects, subjectsReady] = usePersistentState<Subject[]>(
     `unihub:${scope}:subjects`,
     [],
@@ -115,3 +115,5 @@ export function useSubjects(scope: string) {
     loadDemoData,
   };
 }
+
+export { useDisciplinas as useSubjects };

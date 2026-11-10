@@ -6,7 +6,7 @@ import type { AttendanceStatus } from "@/types";
 import { cn } from "@/lib/cn";
 import { STATUS_META } from "@/components/ui/attendance-status";
 import { Sheet } from "@/components/ui/Sheet";
-import { AttendanceButton } from "./AttendanceButton";
+import { BotaoPresenca } from "./BotaoPresenca";
 
 interface AttendanceControlsProps {
   status?: AttendanceStatus;
@@ -20,14 +20,14 @@ const EXTRA: { status: "justified" | "cancelled"; description: string }[] = [
   { status: "cancelled", description: "A aula não aconteceu e não entra na conta da frequência." },
 ];
 
-export function AttendanceControls({ status, onChange, variant = "card" }: AttendanceControlsProps) {
+export function ControlesFrequencia({ status, onChange, variant = "card" }: AttendanceControlsProps) {
   const [extraOpen, setExtraOpen] = useState(false);
 
   if (variant === "full") {
     return (
       <div role="group" aria-label="Registrar presença" className="grid grid-cols-2 gap-2.5">
         {(["present", "absent", "justified", "cancelled"] as const).map((s) => (
-          <AttendanceButton key={s} status={s} selected={status === s} onClick={() => onChange(s)} />
+          <BotaoPresenca key={s} status={s} selected={status === s} onClick={() => onChange(s)} />
         ))}
       </div>
     );
@@ -38,8 +38,8 @@ export function AttendanceControls({ status, onChange, variant = "card" }: Atten
   return (
     <>
       <div role="group" aria-label="Registrar presença" className="grid grid-cols-2 gap-2.5">
-        <AttendanceButton status="present" selected={status === "present"} onClick={() => onChange("present")} />
-        <AttendanceButton status="absent" selected={status === "absent"} onClick={() => onChange("absent")} />
+        <BotaoPresenca status="present" selected={status === "present"} onClick={() => onChange("present")} />
+        <BotaoPresenca status="absent" selected={status === "absent"} onClick={() => onChange("absent")} />
       </div>
 
       <button
@@ -98,3 +98,5 @@ export function AttendanceControls({ status, onChange, variant = "card" }: Atten
     </>
   );
 }
+
+export { ControlesFrequencia as AttendanceControls };

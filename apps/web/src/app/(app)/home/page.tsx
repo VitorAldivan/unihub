@@ -9,11 +9,11 @@ import { useToast } from "@/hooks/useToast";
 import { formatDayHeading, getGreeting } from "@/lib/calendar";
 import { initialsFromEmail } from "@/lib/format";
 import { buildSessionsForDate, getNextAssessment, pickFeatured } from "@/lib/schedule";
-import { ClassDetailSheet } from "@/components/home/ClassDetailSheet";
-import { ClassesSection } from "@/components/home/ClassesSection";
-import { ExamReminder } from "@/components/home/ExamReminder";
-import { FrequencySummary } from "@/components/home/FrequencySummary";
-import { HomeHeader } from "@/components/home/HomeHeader";
+import { ModalDetalheAula } from "@/components/inicio/ModalDetalheAula";
+import { SecaoAulas } from "@/components/inicio/SecaoAulas";
+import { LembreteProva } from "@/components/inicio/LembreteProva";
+import { ResumoFrequencia } from "@/components/inicio/ResumoFrequencia";
+import { CabecalhoInicio } from "@/components/inicio/CabecalhoInicio";
 import { STATUS_META } from "@/components/ui/attendance-status";
 import { Toast } from "@/components/ui/Toast";
 
@@ -46,7 +46,7 @@ export default function HomePage() {
 
   return (
     <div className="px-6 pb-8 pt-6">
-      <HomeHeader
+      <CabecalhoInicio
         name={user.name}
         initials={initialsFromEmail(user.email)}
         dateLabel={formatDayHeading(now)}
@@ -55,9 +55,9 @@ export default function HomePage() {
 
       <hr className="mt-6 border-line" />
 
-      <FrequencySummary semester={semester} frequency={overallFrequency} />
+      <ResumoFrequencia semester={semester} frequency={overallFrequency} />
 
-      <ClassesSection
+      <SecaoAulas
         sessions={sessions}
         featured={featured}
         hasSubjects={subjects.length > 0}
@@ -66,9 +66,9 @@ export default function HomePage() {
         onLoadDemo={loadDemoData}
       />
 
-      {assessment && <ExamReminder title={assessment.title} detail={assessment.detail} />}
+      {assessment && <LembreteProva title={assessment.title} detail={assessment.detail} />}
 
-      <ClassDetailSheet
+      <ModalDetalheAula
         session={detail}
         stats={detail ? stats[detail.subjectId] : undefined}
         onClose={() => setDetailId(null)}

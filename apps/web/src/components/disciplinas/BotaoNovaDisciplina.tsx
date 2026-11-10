@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 
-export function NewSubjectButton({ onClick }: { onClick: () => void }) {
+export function BotaoNovaDisciplina({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
@@ -13,3 +13,5 @@ export function NewSubjectButton({ onClick }: { onClick: () => void }) {
     </button>
   );
 }
+
+export { BotaoNovaDisciplina as NewSubjectButton };

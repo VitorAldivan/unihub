@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/hooks/useSession";
-import { AuthScreen } from "@/components/auth/AuthScreen";
+import { AuthScreen } from "@/components/autenticacao/AuthScreen";
 
 /**
  * Tela de acesso. A sessão é SIMULADA (docs/tech-debt.md): só e-mail e nome ficam no navegador.

@@ -4,7 +4,7 @@ import { Value } from "@/components/ui/Dash";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 
 /** Frequência atual, faltas restantes, barra e as três contagens. Dado ausente = "—", nunca zero. */
-export function SubjectMetrics({ name, stats }: { name: string; stats: AttendanceStats }) {
+export function MetricasDisciplina({ name, stats }: { name: string; stats: AttendanceStats }) {
   // Valor do texto e da barra vêm da mesma informação (arredondada para baixo).
   const pct = stats.frequency === null ? null : displayPct(stats.frequency);
   const remaining = stats.remaining === null ? null : Math.max(0, stats.remaining);
@@ -54,3 +54,5 @@ export function SubjectMetrics({ name, stats }: { name: string; stats: Attendanc
     </>
   );
 }
+
+export { MetricasDisciplina as SubjectMetrics };

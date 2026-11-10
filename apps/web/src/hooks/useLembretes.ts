@@ -5,7 +5,7 @@ import type { NewReminderInput, Reminder } from "@/types";
 import { buildDemoReminder, DEMO_REMINDER_ID } from "@/data/demo";
 import { usePersistentState } from "./usePersistentState";
 
-export function useReminders(scope: string) {
+export function useLembretes(scope: string) {
   const [reminders, setReminders, hydrated] = usePersistentState<Reminder[]>(
     `unihub:${scope}:reminders`,
     [],
@@ -42,3 +42,5 @@ export function useReminders(scope: string) {
 
   return { reminders, hydrated, addReminder, removeReminder, unlinkSubject, loadDemoReminder };
 }
+
+export { useLembretes as useReminders };

@@ -14,7 +14,7 @@ interface MonthGridProps {
 
 const SUNDAY_FIRST = [0, 1, 2, 3, 4, 5, 6].map((i) => WEEKDAYS.find((w) => w.value === i)!.short);
 
-export function MonthGrid({ year, month, selected, today, markedDates, onSelect }: MonthGridProps) {
+export function GradeMes({ year, month, selected, today, markedDates, onSelect }: MonthGridProps) {
   const cells = buildMonthGrid(year, month);
 
   return (
@@ -62,3 +62,5 @@ export function MonthGrid({ year, month, selected, today, markedDates, onSelect 
     </div>
   );
 }
+
+export { GradeMes as MonthGrid };

@@ -14,7 +14,7 @@ interface FrequencyCardProps {
 }
 
 /** Cartão de frequência com a marca do mínimo de 75% (usado no Simulador). */
-export function FrequencyCard({ title, value, situation, children }: FrequencyCardProps) {
+export function CartaoFrequencia({ title, value, situation, children }: FrequencyCardProps) {
   return (
     <section aria-label={title} className="rounded-[20px] bg-brand-soft p-5">
       <div className="flex items-start justify-between gap-3">
@@ -38,3 +38,5 @@ export function FrequencyCard({ title, value, situation, children }: FrequencyCa
     </section>
   );
 }
+
+export { CartaoFrequencia as FrequencyCard };

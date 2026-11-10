@@ -9,7 +9,7 @@ interface ClassListItemProps {
 }
 
 /** Item compacto. Abre os detalhes e os controles de presença em um painel. */
-export function ClassListItem({ session, onOpen }: ClassListItemProps) {
+export function ItemListaAula({ session, onOpen }: ClassListItemProps) {
   const details = [session.room, session.teacher].filter(Boolean).join(" · ");
   const status = session.status ? STATUS_META[session.status] : null;
 
@@ -50,3 +50,5 @@ export function ClassListItem({ session, onOpen }: ClassListItemProps) {
     </li>
   );
 }
+
+export { ItemListaAula as ClassListItem };

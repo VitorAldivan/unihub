@@ -37,7 +37,7 @@ interface SubjectFormProps {
 
 type Text = { target: { value: string } };
 
-export function SubjectForm({
+export function FormularioDisciplina({
   defaultSemester,
   initialValues,
   submitLabel = "Adicionar disciplina",
@@ -510,3 +510,5 @@ export function SubjectForm({
     </form>
   );
 }
+
+export { FormularioDisciplina as SubjectForm };

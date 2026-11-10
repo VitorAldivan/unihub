@@ -13,7 +13,7 @@ interface AbsenceStatsProps {
 }
 
 /** Os 3 números essenciais: faltas permitidas, usadas e restantes. "—" quando não informado. */
-export function AbsenceStats({ allowed, used, remaining, situation, previous }: AbsenceStatsProps) {
+export function EstatisticasFaltas({ allowed, used, remaining, situation, previous }: AbsenceStatsProps) {
   const shown = remaining === null ? null : Math.max(0, remaining);
   const before = (v: number | null) => (previous && v !== null ? `antes ${v}` : undefined);
 
@@ -47,3 +47,5 @@ export function AbsenceStats({ allowed, used, remaining, situation, previous }: 
     </div>
   );
 }
+
+export { EstatisticasFaltas as AbsenceStats };

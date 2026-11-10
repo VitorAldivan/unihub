@@ -1,4 +1,4 @@
-export function SubjectsHeader() {
+export function CabecalhoDisciplinas() {
   return (
     <header>
       <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-soft">Seu semestre</p>
@@ -7,3 +7,5 @@ export function SubjectsHeader() {
     </header>
   );
 }
+
+export { CabecalhoDisciplinas as SubjectsHeader };

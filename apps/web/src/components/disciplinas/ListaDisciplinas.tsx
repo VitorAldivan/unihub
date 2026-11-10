@@ -1,6 +1,6 @@
 import type { AttendanceStats, Subject } from "@/types";
 import { Button } from "@/components/ui/Button";
-import { SubjectItem } from "./SubjectItem";
+import { ItemDisciplina } from "./ItemDisciplina";
 
 interface SubjectListProps {
   subjects: Subject[];
@@ -13,7 +13,7 @@ interface SubjectListProps {
 }
 
 /** Cresce com qualquer quantidade de disciplinas: quem rola é a página, não a lista. */
-export function SubjectList({ subjects, stats, focusId, hasAnySubjects, onOpen, onLoadDemo }: SubjectListProps) {
+export function ListaDisciplinas({ subjects, stats, focusId, hasAnySubjects, onOpen, onLoadDemo }: SubjectListProps) {
   if (subjects.length === 0) {
     return (
       <div className="mt-6 border-t border-line py-10 text-center">
@@ -33,7 +33,7 @@ export function SubjectList({ subjects, stats, focusId, hasAnySubjects, onOpen, 
   return (
     <ul className="mt-6 border-t border-line">
       {subjects.map((subject) => (
-        <SubjectItem
+        <ItemDisciplina
           key={subject.id}
           subject={subject}
           stats={stats[subject.id]}
@@ -44,3 +44,5 @@ export function SubjectList({ subjects, stats, focusId, hasAnySubjects, onOpen, 
     </ul>
   );
 }
+
+export { ListaDisciplinas as SubjectList };

@@ -1,5 +1,5 @@
 import { padCount, plural } from "@/lib/format";
-import { SemesterSelect } from "./SemesterSelect";
+import { SeletorSemestre } from "./SeletorSemestre";
 
 interface SubjectsSummaryProps {
   count: number;
@@ -9,7 +9,7 @@ interface SubjectsSummaryProps {
 }
 
 /** "03 disciplinas" (calculado a partir do semestre selecionado) + seletor de semestre. */
-export function SubjectsSummary({ count, semester, semesters, onSemesterChange }: SubjectsSummaryProps) {
+export function ResumoDisciplinas({ count, semester, semesters, onSemesterChange }: SubjectsSummaryProps) {
   const label = plural(count, "disciplina", "disciplinas");
   return (
     <div className="flex items-center justify-between gap-4">
@@ -24,7 +24,9 @@ export function SubjectsSummary({ count, semester, semesters, onSemesterChange }
           {count} {label} no semestre {semester}
         </span>
       </p>
-      <SemesterSelect value={semester} options={semesters} onChange={onSemesterChange} />
+      <SeletorSemestre value={semester} options={semesters} onChange={onSemesterChange} />
     </div>
   );
 }
+
+export { ResumoDisciplinas as SubjectsSummary };

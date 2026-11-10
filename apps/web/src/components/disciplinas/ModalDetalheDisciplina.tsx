@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Calculator, CalendarDays, Clock, MapPin, Trash2, User } from "lucide-react";
 import type { AttendanceStats, Subject } from "@/types";
 import { describeAbsenceSummary, formatPct, formatTimeRange, formatWeekdays } from "@/lib/format";
-import { AbsenceStats } from "@/components/attendance/AbsenceStats";
+import { EstatisticasFaltas } from "@/components/frequencia/EstatisticasFaltas";
 import { Badge } from "@/components/ui/Badge";
 import { Button, buttonStyles } from "@/components/ui/Button";
 import { Value } from "@/components/ui/Dash";
@@ -19,13 +19,15 @@ interface SubjectDetailSheetProps {
 }
 
 /** Painel local com as informações da disciplina (sem tela nova). */
-export function SubjectDetailSheet({ subject, stats, onClose, onDelete }: SubjectDetailSheetProps) {
+export function ModalDetalheDisciplina({ subject, stats, onClose, onDelete }: SubjectDetailSheetProps) {
   return (
     <Sheet open={subject !== null} onClose={onClose} title={subject?.name ?? ""}>
       {subject && stats && <Body key={subject.id} subject={subject} stats={stats} onDelete={onDelete} />}
     </Sheet>
   );
 }
+
+export { ModalDetalheDisciplina as SubjectDetailSheet };
 
 function Body({
   subject,
@@ -75,7 +77,7 @@ function Body({
           </span>
           {stats.situation && <Badge situation={stats.situation} />}
         </div>
-        <AbsenceStats
+        <EstatisticasFaltas
           allowed={stats.limit}
           used={stats.absences}
           remaining={stats.remaining}

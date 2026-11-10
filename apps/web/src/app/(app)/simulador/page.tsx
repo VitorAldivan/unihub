@@ -9,8 +9,8 @@ import { useAcademic } from "@/context/AcademicProvider";
 import { combineStats, isSimulable, remainingClasses, simulateAbsences } from "@/lib/attendance";
 import { DEFAULT_SIM_MAX } from "@/lib/constants";
 import { formatPct, plural } from "@/lib/format";
-import { AbsenceStats } from "@/components/attendance/AbsenceStats";
-import { FrequencyCard } from "@/components/attendance/FrequencyCard";
+import { EstatisticasFaltas } from "@/components/frequencia/EstatisticasFaltas";
+import { CartaoFrequencia } from "@/components/frequencia/CartaoFrequencia";
 import { buttonStyles } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Field, inputClass } from "@/components/ui/Field";
@@ -173,7 +173,7 @@ export default function SimulatorPage() {
             )}
           </section>
 
-          <FrequencyCard
+          <CartaoFrequencia
             title={
               n === 0
                 ? mode === "overall" ? "Frequência média hoje" : "Frequência hoje"
@@ -184,11 +184,11 @@ export default function SimulatorPage() {
           >
             <p>Hoje: {base.frequency === null ? "—" : formatPct(base.frequency)}</p>
             {after.projected !== null && <p>Fim do semestre, se não faltar mais: {formatPct(after.projected)}</p>}
-          </FrequencyCard>
+          </CartaoFrequencia>
 
           <p className="text-sm text-ink">{describeConsequence(n, after, scope)}</p>
 
-          <AbsenceStats
+          <EstatisticasFaltas
             allowed={after.limit}
             used={after.absences}
             remaining={after.remaining}

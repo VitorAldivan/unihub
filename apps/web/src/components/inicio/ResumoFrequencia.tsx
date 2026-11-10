@@ -8,7 +8,7 @@ interface FrequencySummaryProps {
   frequency: number | null;
 }
 
-export function FrequencySummary({ semester, frequency }: FrequencySummaryProps) {
+export function ResumoFrequencia({ semester, frequency }: FrequencySummaryProps) {
   // Número e barra usam o MESMO valor (arredondado para baixo), sem divergência.
   const pct = frequency === null ? null : displayPct(frequency);
 
@@ -42,3 +42,5 @@ export function FrequencySummary({ semester, frequency }: FrequencySummaryProps)
     </section>
   );
 }
+
+export { ResumoFrequencia as FrequencySummary };

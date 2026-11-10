@@ -6,7 +6,7 @@ interface ExamReminderProps {
 }
 
 /** Lembrete da próxima avaliação. Faz parte do fluxo rolável, depois das aulas. */
-export function ExamReminder({ title, detail }: ExamReminderProps) {
+export function LembreteProva({ title, detail }: ExamReminderProps) {
   return (
     <section aria-label="Próxima avaliação" className="mt-6 border-t border-line pt-5">
       <div className="flex items-start gap-3.5">
@@ -19,3 +19,5 @@ export function ExamReminder({ title, detail }: ExamReminderProps) {
     </section>
   );
 }
+
+export { LembreteProva as ExamReminder };

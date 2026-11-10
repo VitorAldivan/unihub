@@ -2,11 +2,11 @@ import Link from "next/link";
 import { BookOpen, Calculator, Clock, MapPin, User } from "lucide-react";
 import type { AttendanceStats, AttendanceStatus, ClassSession } from "@/types";
 import { formatPct } from "@/lib/format";
-import { AbsenceStats } from "@/components/attendance/AbsenceStats";
+import { EstatisticasFaltas } from "@/components/frequencia/EstatisticasFaltas";
 import { Badge } from "@/components/ui/Badge";
 import { buttonStyles } from "@/components/ui/Button";
 import { Sheet } from "@/components/ui/Sheet";
-import { AttendanceControls } from "./AttendanceControls";
+import { ControlesFrequencia } from "./ControlesFrequencia";
 
 interface ClassDetailSheetProps {
   session: ClassSession | null;
@@ -15,7 +15,7 @@ interface ClassDetailSheetProps {
   onMark: (session: ClassSession, status: AttendanceStatus) => void;
 }
 
-export function ClassDetailSheet({ session, stats, onClose, onMark }: ClassDetailSheetProps) {
+export function ModalDetalheAula({ session, stats, onClose, onMark }: ClassDetailSheetProps) {
   return (
     <Sheet open={session !== null} onClose={onClose} title={session?.name ?? ""}>
       {session && stats && (
@@ -49,7 +49,7 @@ export function ClassDetailSheet({ session, stats, onClose, onMark }: ClassDetai
               </span>
               {stats.situation && <Badge situation={stats.situation} />}
             </div>
-            <AbsenceStats
+            <EstatisticasFaltas
               allowed={stats.limit}
               used={stats.absences}
               remaining={stats.remaining}
@@ -59,7 +59,7 @@ export function ClassDetailSheet({ session, stats, onClose, onMark }: ClassDetai
 
           <div>
             <p className="mb-3 text-sm font-semibold">Como foi sua presença?</p>
-            <AttendanceControls variant="full" status={session.status} onChange={(s) => onMark(session, s)} />
+            <ControlesFrequencia variant="full" status={session.status} onChange={(s) => onMark(session, s)} />
           </div>
 
           <div className="grid gap-2 border-t border-line pt-4">
@@ -77,3 +77,5 @@ export function ClassDetailSheet({ session, stats, onClose, onMark }: ClassDetai
     </Sheet>
   );
 }
+
+export { ModalDetalheAula as ClassDetailSheet };

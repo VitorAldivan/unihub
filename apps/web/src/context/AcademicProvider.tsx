@@ -9,8 +9,8 @@ import type {
   Reminder,
   Subject,
 } from "@/types";
-import { useReminders } from "@/hooks/useReminders";
-import { useSubjects } from "@/hooks/useSubjects";
+import { useLembretes } from "@/hooks/useLembretes";
+import { useDisciplinas } from "@/hooks/useDisciplinas";
 import { useCurrentUser } from "./SessionContext";
 
 interface AcademicValue {
@@ -39,8 +39,8 @@ const AcademicContext = createContext<AcademicValue | null>(null);
 /** Estado acadêmico compartilhado entre todas as telas, isolado por usuário. */
 export function AcademicProvider({ children }: { children: ReactNode }) {
   const { user } = useCurrentUser();
-  const s = useSubjects(user.email);
-  const r = useReminders(user.email);
+  const s = useDisciplinas(user.email);
+  const r = useLembretes(user.email);
 
   const { removeSubject: removeSubjectOnly } = s;
   const { unlinkSubject } = r;

@@ -2,7 +2,7 @@ import { Clock, MapPin, Trash2, User } from "lucide-react";
 import type { AttendanceStats, Subject } from "@/types";
 import { cn } from "@/lib/cn";
 import { formatPct, formatTimeRange, formatWeekdays } from "@/lib/format";
-import { AbsenceStats } from "@/components/attendance/AbsenceStats";
+import { EstatisticasFaltas } from "@/components/frequencia/EstatisticasFaltas";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -14,7 +14,7 @@ interface SubjectCardProps {
   onDelete: () => void;
 }
 
-export function SubjectCard({ subject, stats, highlighted, onDelete }: SubjectCardProps) {
+export function CartaoDisciplina({ subject, stats, highlighted, onDelete }: SubjectCardProps) {
   return (
     <article
       id={`subject-${subject.id}`}
@@ -53,7 +53,7 @@ export function SubjectCard({ subject, stats, highlighted, onDelete }: SubjectCa
       </div>
 
       <div className="mt-5">
-        <AbsenceStats
+        <EstatisticasFaltas
           allowed={stats.limit}
           used={stats.absences}
           remaining={stats.remaining}
@@ -76,3 +76,5 @@ export function SubjectCard({ subject, stats, highlighted, onDelete }: SubjectCa
     </article>
   );
 }
+
+export { CartaoDisciplina as SubjectCard };
