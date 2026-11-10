@@ -59,7 +59,7 @@ export default function SubjectsPage() {
 
       <SubjectsNote />
 
-      <Sheet open={formOpen} onClose={() => setFormOpen(false)} title="Nova disciplina">
+      <Sheet open={formOpen} onClose={() => setFormOpen(false)} title="Nova disciplina" hideHeader>
         <SubjectForm
           defaultSemester={semester}
           onCancel={() => setFormOpen(false)}

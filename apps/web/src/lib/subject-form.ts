@@ -18,10 +18,10 @@ export interface SubjectFormValues {
 export type SubjectFormField = "name" | "semester" | "schedule" | "total" | "held" | "absences" | "limit";
 export type SubjectFormErrors = Partial<Record<SubjectFormField, string>>;
 
-type Count = number | null | "invalid";
+export type Count = number | null | "invalid";
 
 /** "" → null (ausente, NÃO zero) · "12" → 12 · "-1", "1,5", "abc" → "invalid". */
-function parseCount(raw: string): Count {
+export function parseCount(raw: string): Count {
   const text = raw.trim();
   if (text === "") return null;
   if (!/^\d+$/.test(text)) return "invalid";
@@ -29,7 +29,7 @@ function parseCount(raw: string): Count {
   return Number.isSafeInteger(n) ? n : "invalid";
 }
 
-const COUNT_ERROR = "Use um número inteiro maior ou igual a zero.";
+export const COUNT_ERROR = "Use um número inteiro maior ou igual a zero.";
 
 export function validateSubjectForm(v: SubjectFormValues): {
   errors: SubjectFormErrors;
